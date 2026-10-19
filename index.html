@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony Music Pro - Ultimate VIP Music Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo"><i class="fa-solid fa-compact-disc"></i> Harmony VIP</div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search" placeholder="Tìm kiếm bài hát, nghệ sĩ..." aria-label="Tìm kiếm bài hát">
+            </div>
+            <div class="nav-actions"><span class="vip-badge"><i class="fa-solid fa-crown"></i> PRO MEMBER</span></div>
+        </div>
+    </header>
+
+    <main class="main-layout">
+        <aside class="now-playing-card">
+            <span class="eyebrow">ĐANG PHÁT</span>
+            <div class="vinyl-container">
+                <div class="vinyl-disk">
+                    <img class="vinyl-img" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80" alt="Ảnh bìa album">
+                </div>
+                <div class="vinyl-center-dot"></div>
+            </div>
+            <div class="equalizer" aria-hidden="true">
+                <span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span><span class="eq-bar"></span>
+            </div>
+            <div class="track-meta">
+                <div class="track-title">Chill Lofi Beats &amp; Study</div>
+                <div class="track-artist">Lofi Producer VIP</div>
+            </div>
+        </aside>
+
+        <section class="content-area">
+            <section class="hero-banner">
+                <div class="hero-content">
+                    <span class="featured-label">ALBUM NỔI BẬT</span>
+                    <h1>Cyberpunk Cyber-Beats 2026</h1>
+                    <p>Trải nghiệm không gian âm nhạc với những giai điệu điện tử đầy màu sắc.</p>
+                    <a class="btn-play-all" href="#playlist"><i class="fa-solid fa-list-music"></i> Khám phá danh sách</a>
+                </div>
+            </section>
+
+            <section class="lyrics-box">
+                <p>🎵 Lời bài hát hoặc thông tin âm nhạc sẽ hiển thị tại đây...</p>
+                <p class="lyric-note">Phiên bản giao diện tĩnh — không sử dụng JavaScript.</p>
+            </section>
+
+            <section class="playlist-section" id="playlist">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fa-solid fa-list-ul"></i> Danh Sách Phát VIP</h2>
+                    <span class="song-count">3 Bài hát</span>
+                </div>
+                <div class="playlist-grid">
+                    <article class="song-item">
+                        <div class="song-left">
+                            <span class="song-index">01</span>
+                            <img class="song-thumb" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=120&q=80" alt="">
+                            <div class="song-info"><h3>Chill Lofi Beats &amp; Study</h3><p>Lofi Producer VIP</p></div>
+                        </div>
+                        <span class="song-duration">02:30</span>
+                    </article>
+                    <article class="song-item">
+                        <div class="song-left">
+                            <span class="song-index">02</span>
+                            <img class="song-thumb" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=120&q=80" alt="">
+                            <div class="song-info"><h3>Cyberpunk Synthwave Neon</h3><p>Cyber Dreams Studio</p></div>
+                        </div>
+                        <span class="song-duration">07:05</span>
+                    </article>
+                    <article class="song-item">
+                        <div class="song-left">
+                            <span class="song-index">03</span>
+                            <img class="song-thumb" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=120&q=80" alt="">
+                            <div class="song-info"><h3>Midnight Acoustic Melody</h3><p>Acoustic Guitar Band</p></div>
+                        </div>
+                        <span class="song-duration">05:44</span>
+                    </article>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="player-footer">
+        <div class="player-bar">
+            <div class="player-left">
+                <img class="player-thumb" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=100&q=80" alt="">
+                <div class="player-meta"><div class="track-title">Chill Lofi Beats &amp; Study</div><div class="track-artist">Lofi Producer VIP</div></div>
+            </div>
+            <div class="player-center">
+                <div class="controls" aria-label="Điều khiển trình phát tĩnh">
+                    <span class="btn-ctrl"><i class="fa-solid fa-shuffle"></i></span>
+                    <span class="btn-ctrl"><i class="fa-solid fa-backward-step"></i></span>
+                    <span class="btn-play-pause"><i class="fa-solid fa-play"></i></span>
+                    <span class="btn-ctrl"><i class="fa-solid fa-forward-step"></i></span>
+                    <span class="btn-ctrl"><i class="fa-solid fa-repeat"></i></span>
+                </div>
+                <div class="progress-wrapper">
+                    <span>00:00</span><div class="progress-bar-container"><div class="progress-bar-fill"></div></div><span>02:30</span>
+                </div>
+            </div>
+            <div class="player-right"><i class="fa-solid fa-volume-high"></i><div class="volume-track"><span></span></div></div>
+        </div>
+    </footer>
+</body>
+</html>
