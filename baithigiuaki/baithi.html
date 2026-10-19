@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony Music Pro - Ultimate VIP Music Player</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <!-- AOS CSS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-glow: #8b5cf6;
+            --secondary-glow: #ec4899;
+            --cyan-glow: #06b6d4;
+            --bg-dark: #080b13;
+            --bg-card: rgba(18, 24, 38, 0.7);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: 120px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-glow); }
+
+        /* Navigation Bar */
+        header {
+            background: rgba(8, 11, 19, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo i {
+            color: var(--primary-glow);
+            -webkit-text-fill-color: initial;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            padding: 10px 18px;
+            border-radius: 30px;
+            gap: 12px;
+            width: 360px;
+            transition: var(--transition-smooth);
+        }
+
+        .search-box:focus-within {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .vip-badge {
+            background: var(--gradient-accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Layout Container */
+        .main-layout {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 2rem;
+        }
+
+        /* Player Section (Left) */
+        .now-playing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            position: sticky;
+            top: 100px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vinyl-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vinyl-disk {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #222 20%, #111 60%, #000 100%);
+            border: 8px solid #1e293b;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(139, 92, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+            animation: rotateVinyl 20s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .vinyl-disk.playing {
+            animation-play-state: running;
+        }
+
+        @keyframes rotateVinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vinyl-img {
+            width: 55%;
+            height: 55%;
+            border-radius: 50%;
+            object-fit: cover;
+            position: absolute;
+            top: 22.5%;
+            left: 22.5%;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .vinyl-center-dot {
+            width: 20px;
+            height: 20px;
+            background: #080b13;
+            border: 3px solid #8b5cf6;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 5;
+        }
+
+        /* Equalizer Animation Bars */
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 25px;
+            margin-top: 10px;
+        }
+
+        .eq-bar {
+            width: 4px;
+            height: 10%;
+            background: var(--cyan-glow);
+            border-radius: 2px;
+            transition: height 0.2s ease;
+        }
+
+        .playing .eq-bar:nth-child(1) { animation: eq 0.8s ease-in-out infinite alternate; }
+        .playing .eq-bar:nth-child(2) { animation: eq 0.5s ease-in-out infinite alternate 0.2s; }
+        .playing .eq-bar:nth-child(3) { animation: eq 0.9s ease-in-out infinite alternate 0.4s; }
+        .playing .eq-bar:nth-child(4) { animation: eq 0.6s ease-in-out infinite alternate 0.1s; }
+        .playing .eq-bar:nth-child(5) { animation: eq 0.7s ease-in-out infinite alternate 0.3s; }
+
+        @keyframes eq {
+            0% { height: 15%; background: var(--primary-glow); }
+            100% { height: 100%; background: var(--secondary-glow); }
+        }
+
+        .track-meta {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .track-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-artist {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Content Section (Right) */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(236, 72, 153, 0.2) 100%), url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80') center/cover;
+            border-radius: var(--radius-lg);
+            padding: 3rem 2.5rem;
+            border: 1px solid var(--border-glass);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, var(--bg-dark) 20%, transparent 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-play-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-play-all:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Playlist Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i { color: var(--primary-glow); }
+
+        .playlist-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .song-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .song-item:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateX(5px);
+        }
+
+        .song-item.active {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .song-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .song-index {
+            font-weight: 700;
+            color: var(--text-muted);
+            width: 25px;
+        }
+
+        .song-item.active .song-index {
+            color: var(--primary-glow);
+        }
+
+        .song-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .song-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .song-info p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .song-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .btn-fav {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-fav:hover, .btn-fav.active {
+            color: var(--secondary-glow);
+        }
+
+        /* Lyrics Box */
+        .lyrics-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .lyrics-box p.active-lyric {
+            color: var(--cyan-glow);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Fixed Bottom Music Player Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(8, 11, 19, 0.92);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-glass);
+            z-index: 2000;
+            padding: 0.8rem 2rem;
+        }
+
+        .player-bar {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .player-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 280px;
+        }
+
+        .player-thumb {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border-glass);
+        }
+
+        .player-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .btn-ctrl {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-ctrl:hover, .btn-ctrl.active {
+            color: var(--primary-glow);
+        }
+
+        .btn-play-pause {
+            background: var(--gradient-accent) !important;
+            color: white !important;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-play-pause:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 22px rgba(236, 72, 153, 0.6);
+        }
+
+        .progress-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-accent);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+
+        .player-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 200px;
+            justify-content: flex-end;
+            color: var(--text-muted);
+        }
+
+        .volume-slider {
+            width: 90px;
+            accent-color: var(--primary-glow);
+            cursor: pointer;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            z-index: 3000;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .now-playing-card { position: relative; top: 0; }
+            .search-box { width: 200px; }
+        }
+
+        @media (max-width: 640px) {
+            .search-box { display: none; }
+            .player-left { width: 180px; }
+            .player-right { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fa-solid fa-compact-disc fa-spin"></i> Harmony VIP
+            </div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm bài hát, nghệ sĩ...">
+            </div>
+            <div class="nav-actions">
+                <span class="vip-badge"><i class="fa-solid fa-crown"></i> PRO MEMBER</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+
+        <!-- Left Player Card -->
+        <div class="now-playing-card" data-aos="fade-right">
+            <span style="font-size: 0.8rem; letter-spacing: 1.5px; color: var(--cyan-glow); font-weight: 700;">ĐANG PHÁT</span>
+            
+            <div class="vinyl-container">
+                <div class="vinyl-disk" id="vinylDisk">
+                    <img id="vinylImg" class="vinyl-img" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80" alt="Cover">
+                </div>
+                <div class="vinyl-center-dot"></div>
+            </div>
+
+            <!-- Equalizer -->
+            <div class="equalizer" id="equalizer">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+            </div>
+
+            <div class="track-meta">
+                <div class="track-title" id="cardTitle">Chọn bài hát</div>
+                <div class="track-artist" id="cardArtist">Harmony Music Studio</div>
+            </div>
+        </div>
+
+        <!-- Right Content Area -->
+        <div class="content-area">
+
+            <!-- Hero Banner -->
+            <div class="hero-banner" data-aos="fade-down">
+                <div class="hero-content">
+                    <span style="color: var(--secondary-glow); font-weight: 700; font-size: 0.85rem;">ALBUM NỔI BẬT</span>
+                    <h1>Cyberpunk Cyber-Beats 2026</h1>
+                    <p>Trải nghiệm âm thanh 3D Surround chất lượng 320kbps lossless tốt nhất thị trường.</p>
+                    <button class="btn-play-all" id="btnPlayAll">
+                        <i class="fa-solid fa-play"></i> Phát Tất Cả
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lyrics Section -->
+            <div class="lyrics-box" id="lyricsBox" data-aos="fade-up">
+                <p>🎵 Lời bài hát sẽ hiển thị và tự đồng bộ theo giai điệu tại đây...</p>
+            </div>
+
+            <!-- Playlist Section -->
+            <div class="playlist-section" data-aos="fade-up">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fa-solid fa-list-ul"></i> Danh Sách Phát VIP
+                    </div>
+                    <span style="color: var(--text-muted); font-size: 0.85rem;" id="songCount">3 Bài hát</span>
+                </div>
+
+                <div class="playlist-grid" id="playlistContainer">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Fixed Bottom Audio Player -->
+    <footer>
+        <audio id="mainAudio"></audio>
+
+        <div class="player-bar">
+            <!-- Song Meta Left -->
+            <div class="player-left">
+                <img id="playerThumb" class="player-thumb" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=100&q=80" alt="Thumb">
+                <div style="overflow: hidden;">
+                    <div class="track-title" id="playerTitle" style="font-size: 0.95rem;">Chưa chọn bài hát</div>
+                    <div class="track-artist" id="playerArtist" style="font-size: 0.8rem;">Harmony Studio</div>
+                </div>
+            </div>
+
+            <!-- Center Controls & Progress -->
+            <div class="player-center">
+                <div class="controls">
+                    <button class="btn-ctrl" id="btnShuffle" title="Phát ngẫu nhiên"><i class="fa-solid fa-shuffle"></i></button>
+                    <button class="btn-ctrl" id="btnPrev" title="Bài trước"><i class="fa-solid fa-backward-step"></i></button>
+                    <button class="btn-ctrl btn-play-pause" id="btnPlayPause" title="Phát/Tạm dừng"><i class="fa-solid fa-play"></i></button>
+                    <button class="btn-ctrl" id="btnNext" title="Bài tiếp"><i class="fa-solid fa-forward-step"></i></button>
+                    <button class="btn-ctrl" id="btnRepeat" title="Lặp lại"><i class="fa-solid fa-repeat"></i></button>
+                </div>
+
+                <div class="progress-wrapper">
+                    <span id="currentTime">00:00</span>
+                    <div class="progress-bar-container" id="progressBar">
+                        <div class="progress-bar-fill" id="progressFill"></div>
+                    </div>
+                    <span id="duration">00:00</span>
+                </div>
+            </div>
+
+            <!-- Right Volume -->
+            <div class="player-right">
+                <i class="fa-solid fa-volume-high" id="volumeIcon" style="cursor: pointer;"></i>
+                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.8">
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toastNotification">Thông báo</div>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Main Logic Script -->
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Playlist Data
+        const songs = [
+            {
+                id: 0,
+                title: "Chill Lofi Beats & Study",
+                artist: "Lofi Producer VIP",
+                duration: "02:30",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80",
+                lyric: "Giai điệu lofi nhẹ nhàng thư giãn... Tập trung học tập và làm việc hiệu quả cùng Harmony VIP!"
+            },
+            {
+                id: 1,
+                title: "Cyberpunk Synthwave Neon",
+                artist: "Cyber Dreams Studio",
+                duration: "07:05",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80",
+                lyric: "Ánh đèn neon rực rỡ phố đêm... Âm hưởng Synthwave sôi động bùng nổ không gian!"
+            },
+            {
+                id: 2,
+                title: "Midnight Acoustic Melody",
+                artist: "Acoustic Guitar Band",
+                duration: "05:44",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80",
+                lyric: "Tiếng đàn mộc mạc lắng đọng đêm muộn... Thả hồn theo những nốt nhạc acoustics mộng mơ."
+            }
+        ];
+
+        // Global State
+        let currentSongIndex = 0;
+        let isPlaying = false;
+        let isShuffle = false;
+        let isRepeat = false;
+
+        // DOM Elements
+        const audio = document.getElementById('mainAudio');
+        const btnPlayPause = document.getElementById('btnPlayPause');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const btnShuffle = document.getElementById('btnShuffle');
+        const btnRepeat = document.getElementById('btnRepeat');
+        const btnPlayAll = document.getElementById('btnPlayAll');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const playlistContainer = document.getElementById('playlistContainer');
+        const lyricsBox = document.getElementById('lyricsBox');
+        
+        const cardTitle = document.getElementById('cardTitle');
+        const cardArtist = document.getElementById('cardArtist');
+        const vinylDisk = document.getElementById('vinylDisk');
+        const vinylImg = document.getElementById('vinylImg');
+        const equalizer = document.getElementById('equalizer');
+
+        const playerTitle = document.getElementById('playerTitle');
+        const playerArtist = document.getElementById('playerArtist');
+        const playerThumb = document.getElementById('playerThumb');
+        const searchInput = document.getElementById('searchInput');
+
+        // Render Playlist
+        function renderPlaylist(songList = songs) {
+            playlistContainer.innerHTML = '';
+            songList.forEach((song, idx) => {
+                const isActive = song.id === currentSongIndex;
+                const item = document.createElement('div');
+                item.className = `song-item ${isActive ? 'active' : ''}`;
+                item.onclick = () => selectSong(song.id);
+                item.innerHTML = `
+                    <div class="song-left">
+                        <span class="song-index">${idx + 1}</span>
+                        <img src="${song.img}" class="song-thumb" alt="thumb">
+                        <div class="song-info">
+                            <h4>${song.title}</h4>
+                            <p>${song.artist}</p>
+                        </div>
+                    </div>
+                    <div class="song-right">
+                        <span>${song.duration}</span>
+                        <button class="btn-fav" onclick="toggleFav(event, this)"><i class="fa-regular fa-heart"></i></button>
+                    </div>
+                `;
+                playlistContainer.appendChild(item);
+            });
+            document.getElementById('songCount').innerText = `${songList.length} Bài hát`;
+        }
+
+        // Load Song Details
+        function loadSong(song) {
+            audio.src = song.src;
+            cardTitle.innerText = song.title;
+            cardArtist.innerText = song.artist;
+            vinylImg.src = song.img;
+
+            playerTitle.innerText = song.title;
+            playerArtist.innerText = song.artist;
+            playerThumb.src = song.img;
+
+            lyricsBox.innerHTML = `<p class="active-lyric">🎵 ${song.lyric}</p>`;
+            renderPlaylist();
+        }
+
+        // Play / Pause Logic
+        function playAudio() {
+            audio.play();
+            isPlaying = true;
+            btnPlayPause.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            vinylDisk.classList.add('playing');
+            equalizer.classList.add('playing');
+        }
+
+        function pauseAudio() {
+            audio.pause();
+            isPlaying = false;
+            btnPlayPause.innerHTML = '<i class="fa-solid fa-play"></i>';
+            vinylDisk.classList.remove('playing');
+            equalizer.classList.remove('playing');
+        }
+
+        btnPlayPause.onclick = () => {
+            if (isPlaying) pauseAudio();
+            else playAudio();
+        };
+
+        // Select Song
+        function selectSong(id) {
+            currentSongIndex = id;
+            loadSong(songs[currentSongIndex]);
+            playAudio();
+            showToast(`Đang phát: ${songs[currentSongIndex].title}`);
+        }
+
+        // Next / Prev Song
+        btnNext.onclick = () => {
+            if (isShuffle) {
+                currentSongIndex = Math.floor(Math.random() * songs.length);
+            } else {
+                currentSongIndex = (currentSongIndex + 1) % songs.length;
+            }
+            selectSong(currentSongIndex);
+        };
+
+        btnPrev.onclick = () => {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            selectSong(currentSongIndex);
+        };
+
+        btnPlayAll.onclick = () => {
+            selectSong(0);
+        };
+
+        // Shuffle & Repeat Toggles
+        btnShuffle.onclick = () => {
+            isShuffle = !isShuffle;
+            btnShuffle.classList.toggle('active', isShuffle);
+            showToast(isShuffle ? "Đã BẬT phát ngẫu nhiên" : "Đã TẮT phát ngẫu nhiên");
+        };
+
+        btnRepeat.onclick = () => {
+            isRepeat = !isRepeat;
+            btnRepeat.classList.toggle('active', isRepeat);
+            showToast(isRepeat ? "Đã BẬT lặp lại bài viết" : "Đã TẮT lặp lại");
+        };
+
+        // Audio Timeupdate
+        audio.ontimeupdate = () => {
+            if (isNaN(audio.duration)) return;
+            const pct = (audio.currentTime / audio.duration) * 100;
+            progressFill.style.width = `${pct}%`;
+
+            currentTimeEl.innerText = formatTime(audio.currentTime);
+            durationEl.innerText = formatTime(audio.duration);
+        };
+
+        // Audio Ended
+        audio.onended = () => {
+            if (isRepeat) {
+                playAudio();
+            } else {
+                btnNext.click();
+            }
+        };
+
+        // Click Progress Bar
+        progressBar.onclick = (e) => {
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            audio.currentTime = (clickX / width) * audio.duration;
+        };
+
+        // Volume Control
+        volumeSlider.oninput = (e) => {
+            audio.volume = e.target.value;
+            if (audio.volume === 0) volumeIcon.className = 'fa-solid fa-volume-xmark';
+            else volumeIcon.className = 'fa-solid fa-volume-high';
+        };
+
+        // Format Time Utilities
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        // Search Filter
+        searchInput.oninput = (e) => {
+            const val = e.target.value.toLowerCase();
+            const filtered = songs.filter(s => s.title.toLowerCase().includes(val) || s.artist.toLowerCase().includes(val));
+            renderPlaylist(filtered);
+        };
+
+        // Favorite Toggle
+        function toggleFav(e, btn) {
+            e.stopPropagation();
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('i');
+            if (btn.classList.contains('active')) {
+                icon.className = 'fa-solid fa-heart';
+                showToast("Đã thêm vào bài hát yêu thích!");
+            } else {
+                icon.className = 'fa-regular fa-heart';
+            }
+        }
+
+        // Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Init App
+        loadSong(songs[0]);
+    </script>
+</body>
+</html>
